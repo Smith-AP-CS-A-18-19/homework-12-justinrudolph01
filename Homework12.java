@@ -11,14 +11,17 @@ public class Homework12 {
 	 * variables. The constructor should create and save an
 	 * ArrayList of RectangularShape values
 	 */
-	public Homework12() {
+	 private ArrayList<RectangularShape> list;
 
+
+	public Homework12() {
+		list = new ArrayList<RectangularShape>();
 	}
 
 	/* Adds the parameter s to the ArrayList
 	 */
 	public void addShape(RectangularShape s) {
-
+		list.add(s);
 	}
 
 	/* Returns the number of RectangularShape objects
@@ -26,7 +29,13 @@ public class Homework12 {
 	 * parameter r
 	 */
 	public int problem1(Rectangle2D r) {
-
+		int num = 0;
+		for (int i = 0; i < list.size(); i++){
+			if (list.get(i).intersects(r)){
+				num++;
+			}
+		}
+		return num;
 	}
 
 	/* Returns the number of RectangularShape objects
@@ -34,21 +43,40 @@ public class Homework12 {
 	 * parameter p
 	 */
 	public int problem2(Point2D p) {
-
+		int num = 0;
+		for (int i = 0; i < list.size(); i++){
+			if (list.get(i).contains(p) == false){
+				num++;
+			}
+		}
+		return num;
 	}
 
 	/* Returns the number of Ellipse2D objects that
 	 * are in the ArrayList
 	 */
 	public int problem3() {
-
+		int num = 0;
+		Ellipse2D ellipse = new Ellipse2D.Double();
+		for(int i = 0; i < list.size(); i++){
+			RectangularShape rect = list.get(i);
+			if (rect.getClass() == ellipse.getClass()){
+				num++;
+			}
+		}
+		return num;
 	}
 
 	/* Returns true if any of the Rectangle2D objects
 	 * in the ArrayList intersects the parameter Line2D
 	 */
 	public boolean problem4(Line2D l) {
-
+		for (int i = 0; i < list.size(); i++){
+			if(list.get(i).contains(l.getX1(), l.getY1())){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/* Return the total area of the RectangularShape objects in
@@ -60,7 +88,19 @@ public class Homework12 {
 	 * counts for both (i.e. do not account for intersection)
 	 */
 	public double problem5() {
+		double totalArea = 0;
+		Rectangle2D rect = new Rectangle2D.Double();
+		Ellipse2D ellipse = new Ellipse2D.Double();
 
+		for(int i = 0; i < list.size(); i++){
+			RectangularShape rect2 = list.get(i);
+			if (rect.getClass() == rect2.getClass()){
+				totalArea += rect2.getWidth() * rect2.getHeight();
+			} else if (ellipse.getClass() == rect2.getClass()){
+				totalArea += Math.PI * (rect2.getHeight() / 2) * (rect2.getWidth() / 2);
+			}
+		}
+		return totalArea;
 	}
 
 	public static void main(String[] args) {
